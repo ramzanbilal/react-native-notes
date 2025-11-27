@@ -13,14 +13,14 @@
 7. [Functions](#functions)
    - [Traditional Functions](#traditional-functions)
    - [Arrow Functions](#arrow-functions)
-   - [Function vs Arrow Function Differences](#function-vs-arrow-function-differences)
 8. [Arrays](#arrays)
 9. [Array Methods](#array-methods)
 10. [Loops](#loops)
 11. [Sets](#sets)
-12. [Functional Components in React Native](#functional-components-in-react-native)
-13. [Why Functions Are Better Than Classes](#why-functions-are-better-than-classes)
-14. [JavaScript's Shift to Function-Based Programming](#javascripts-shift-to-function-based-programming)
+12. [Optional Chaining & Nullish Coalescing](#optional-chaining--nullish-coalescing)
+13. [Functional Components in React Native](#functional-components-in-react-native)
+14. [Why Functions Are Better Than Classes](#why-functions-are-better-than-classes)
+15. [JavaScript's Shift to Function-Based Programming](#javascripts-shift-to-function-based-programming)
 
 ---
 
@@ -34,16 +34,16 @@ This guide provides comprehensive JavaScript fundamentals specifically tailored 
 
 ### Key Differences
 
-| Feature | JavaScript | TypeScript |
-|---------|-----------|------------|
-| **Type System** | Dynamic (runtime) | Static (compile-time) |
-| **Type Checking** | No built-in type checking | Strong type checking |
-| **Compilation** | Interpreted directly | Compiled to JavaScript |
-| **Error Detection** | Runtime errors | Compile-time errors |
-| **IDE Support** | Basic | Advanced (IntelliSense, autocomplete) |
-| **Learning Curve** | Easier | Steeper |
-| **Code Verbosity** | Less verbose | More verbose |
-| **Refactoring** | Risky | Safer |
+| Feature             | JavaScript                | TypeScript                            |
+| ------------------- | ------------------------- | ------------------------------------- |
+| **Type System**     | Dynamic (runtime)         | Static (compile-time)                 |
+| **Type Checking**   | No built-in type checking | Strong type checking                  |
+| **Compilation**     | Interpreted directly      | Compiled to JavaScript                |
+| **Error Detection** | Runtime errors            | Compile-time errors                   |
+| **IDE Support**     | Basic                     | Advanced (IntelliSense, autocomplete) |
+| **Learning Curve**  | Easier                    | Steeper                               |
+| **Code Verbosity**  | Less verbose              | More verbose                          |
+| **Refactoring**     | Risky                     | Safer                                 |
 
 ### Which One Is Better and Why?
 
@@ -57,6 +57,7 @@ This guide provides comprehensive JavaScript fundamentals specifically tailored 
 6. **Scalability**: Easier to maintain large codebases
 
 **JavaScript is better for**:
+
 - Small projects or prototypes
 - Quick experiments
 - Developers new to programming
@@ -70,293 +71,53 @@ This guide provides comprehensive JavaScript fundamentals specifically tailored 
 
 Primitive data types are immutable and stored directly in memory.
 
-#### 1. String
+#### String, Number, Boolean Examples
 
-**JavaScript Example:**
+**JavaScript:**
+
 ```javascript
-// React Native Component
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
+import { useState } from "react";
 
-const UserGreeting = () => {
-  const firstName = 'John';
-  const lastName = "Doe";
-  const message = `Welcome, ${firstName} ${lastName}!`; // Template literal
-  
+const DataTypesDemo = () => {
+  const name = "John Doe";
+  const age = 30;
+  const isActive = true;
+  const score = 0;
+  const message = `User ${name} is ${age} years old`;
+
   return (
     <View>
+      <Text>Name: {name}</Text>
+      <Text>Age: {age}</Text>
+      <Text>Active: {isActive ? "Yes" : "No"}</Text>
+      <Text>Score: {score}</Text>
       <Text>{message}</Text>
     </View>
   );
 };
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
+**TypeScript:**
 
-const UserGreeting = (): JSX.Element => {
-  const firstName: string = 'John';
-  const lastName: string = "Doe";
-  const message: string = `Welcome, ${firstName} ${lastName}!`;
-  
+```typescript
+import { Text, View } from "react-native";
+import { FC } from "react";
+
+const DataTypesDemo: FC = () => {
+  const name: string = "John Doe";
+  const age: number = 30;
+  const isActive: boolean = true;
+  const score: number = 0;
+  const message: string = `User ${name} is ${age} years old`;
+
   return (
     <View>
+      <Text>Name: {name}</Text>
+      <Text>Age: {age}</Text>
+      <Text>Active: {isActive ? "Yes" : "No"}</Text>
+      <Text>Score: {score}</Text>
       <Text>{message}</Text>
-    </View>
-  );
-};
-```
-
-#### 2. Number
-
-**JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
-
-const ProductPrice = () => {
-  const price = 99.99;
-  const quantity = 5;
-  const total = price * quantity;
-  const discount = 10; // 10%
-  const finalPrice = total - (total * discount / 100);
-  
-  return (
-    <View>
-      <Text>Price: ${price}</Text>
-      <Text>Quantity: {quantity}</Text>
-      <Text>Total: ${finalPrice.toFixed(2)}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-const ProductPrice = (): JSX.Element => {
-  const price: number = 99.99;
-  const quantity: number = 5;
-  const total: number = price * quantity;
-  const discount: number = 10;
-  const finalPrice: number = total - (total * discount / 100);
-  
-  return (
-    <View>
-      <Text>Price: ${price}</Text>
-      <Text>Quantity: {quantity}</Text>
-      <Text>Total: ${finalPrice.toFixed(2)}</Text>
-    </View>
-  );
-};
-```
-
-#### 3. Boolean
-
-**JavaScript Example:**
-```javascript
-import { Text, View, Button } from 'react-native';
-import { useState } from 'react';
-
-const ToggleComponent = () => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-  return (
-    <View>
-      {isVisible && <Text>This content is visible!</Text>}
-      <Button 
-        title={isVisible ? "Hide" : "Show"} 
-        onPress={() => setIsVisible(!isVisible)} 
-      />
-      <Text>User is {isLoggedIn ? "logged in" : "logged out"}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View, Button } from 'react-native';
-import { useState } from 'react';
-
-const ToggleComponent = (): JSX.Element => {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  
-  return (
-    <View>
-      {isVisible && <Text>This content is visible!</Text>}
-      <Button 
-        title={isVisible ? "Hide" : "Show"} 
-        onPress={() => setIsVisible(!isVisible)} 
-      />
-      <Text>User is {isLoggedIn ? "logged in" : "logged out"}</Text>
-    </View>
-  );
-};
-```
-
-#### 4. Undefined
-
-**JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
-import { useState } from 'react';
-
-const UserProfile = () => {
-  const [username, setUsername] = useState(); // undefined initially
-  
-  return (
-    <View>
-      <Text>
-        Username: {username !== undefined ? username : 'Not set'}
-      </Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-import { useState } from 'react';
-
-const UserProfile = (): JSX.Element => {
-  const [username, setUsername] = useState<string | undefined>(undefined);
-  
-  return (
-    <View>
-      <Text>
-        Username: {username !== undefined ? username : 'Not set'}
-      </Text>
-    </View>
-  );
-};
-```
-
-#### 5. Null
-
-**JavaScript Example:**
-```javascript
-import { Text, View, ActivityIndicator } from 'react-native';
-import { useState, useEffect } from 'react';
-
-const DataFetcher = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    fetch('https://api.example.com/data')
-      .then(response => response.json())
-      .then(json => setData(json))
-      .catch(err => setError(err.message));
-  }, []);
-  
-  if (error !== null) return <Text>Error: {error}</Text>;
-  if (data === null) return <ActivityIndicator />;
-  
-  return <Text>Data loaded: {JSON.stringify(data)}</Text>;
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View, ActivityIndicator } from 'react-native';
-import { useState, useEffect } from 'react';
-
-interface DataType {
-  id: number;
-  name: string;
-}
-
-const DataFetcher = (): JSX.Element => {
-  const [data, setData] = useState<DataType | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  
-  useEffect(() => {
-    fetch('https://api.example.com/data')
-      .then(response => response.json())
-      .then((json: DataType) => setData(json))
-      .catch((err: Error) => setError(err.message));
-  }, []);
-  
-  if (error !== null) return <Text>Error: {error}</Text>;
-  if (data === null) return <ActivityIndicator />;
-  
-  return <Text>Data loaded: {JSON.stringify(data)}</Text>;
-};
-```
-
-#### 6. Symbol
-
-**JavaScript Example:**
-```javascript
-// Symbols create unique identifiers
-const USER_ID = Symbol('userId');
-const ADMIN_ID = Symbol('userId');
-
-const user = {
-  [USER_ID]: 12345,
-  name: 'John'
-};
-
-console.log(user[USER_ID]); // 12345
-console.log(USER_ID === ADMIN_ID); // false (symbols are always unique)
-```
-
-**TypeScript Example:**
-```typescript
-const USER_ID: symbol = Symbol('userId');
-const ADMIN_ID: symbol = Symbol('userId');
-
-interface User {
-  [USER_ID]: number;
-  name: string;
-}
-
-const user: User = {
-  [USER_ID]: 12345,
-  name: 'John'
-};
-
-console.log(user[USER_ID]); // 12345
-console.log(USER_ID === ADMIN_ID); // false
-```
-
-#### 7. BigInt
-
-**JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
-
-const LargeNumbers = () => {
-  const largeNumber = 9007199254740991n; // BigInt
-  const anotherBig = BigInt("9007199254740991");
-  const sum = largeNumber + 1n;
-  
-  return (
-    <View>
-      <Text>Large Number: {largeNumber.toString()}</Text>
-      <Text>Sum: {sum.toString()}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-const LargeNumbers = (): JSX.Element => {
-  const largeNumber: bigint = 9007199254740991n;
-  const anotherBig: bigint = BigInt("9007199254740991");
-  const sum: bigint = largeNumber + 1n;
-  
-  return (
-    <View>
-      <Text>Large Number: {largeNumber.toString()}</Text>
-      <Text>Sum: {sum.toString()}</Text>
     </View>
   );
 };
@@ -364,177 +125,89 @@ const LargeNumbers = (): JSX.Element => {
 
 ### Non-Primitive Data Types
 
-Non-primitive data types are mutable and stored by reference.
+#### Objects and Arrays
 
-#### 1. Object
+**JavaScript:**
 
-**JavaScript Example:**
 ```javascript
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList } from "react-native";
 
-const UserCard = () => {
+const UserProfile = () => {
   const user = {
     id: 1,
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    age: 28,
-    address: {
-      street: '123 Main St',
-      city: 'New York',
-      zipCode: '10001'
-    },
-    hobbies: ['Reading', 'Coding', 'Gaming']
+    name: "Alice",
+    email: "alice@example.com",
+    hobbies: ["Reading", "Coding", "Gaming"],
   };
-  
+
+  const products = [
+    { id: 1, name: "Laptop", price: 999 },
+    { id: 2, name: "Phone", price: 599 },
+  ];
+
   return (
     <View>
-      <Text>Name: {user.name}</Text>
-      <Text>Email: {user.email}</Text>
-      <Text>City: {user.address.city}</Text>
-      <Text>Hobbies: {user.hobbies.join(', ')}</Text>
+      <Text>User: {user.name}</Text>
+      <Text>Hobbies: {user.hobbies.join(", ")}</Text>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Text>
+            {item.name}: ${item.price}
+          </Text>
+        )}
+      />
     </View>
   );
 };
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
+**TypeScript:**
 
-interface Address {
-  street: string;
-  city: string;
-  zipCode: string;
-}
+```typescript
+import { Text, View, FlatList } from "react-native";
+import { FC } from "react";
 
 interface User {
   id: number;
   name: string;
   email: string;
-  age: number;
-  address: Address;
   hobbies: string[];
 }
 
-const UserCard = (): JSX.Element => {
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+const UserProfile: FC = () => {
   const user: User = {
     id: 1,
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    age: 28,
-    address: {
-      street: '123 Main St',
-      city: 'New York',
-      zipCode: '10001'
-    },
-    hobbies: ['Reading', 'Coding', 'Gaming']
+    name: "Alice",
+    email: "alice@example.com",
+    hobbies: ["Reading", "Coding", "Gaming"],
   };
-  
+
+  const products: Product[] = [
+    { id: 1, name: "Laptop", price: 999 },
+    { id: 2, name: "Phone", price: 599 },
+  ];
+
   return (
     <View>
-      <Text>Name: {user.name}</Text>
-      <Text>Email: {user.email}</Text>
-      <Text>City: {user.address.city}</Text>
-      <Text>Hobbies: {user.hobbies.join(', ')}</Text>
-    </View>
-  );
-};
-```
-
-#### 2. Array
-
-**JavaScript Example:**
-```javascript
-import { Text, View, FlatList } from 'react-native';
-
-const TodoList = () => {
-  const todos = ['Buy groceries', 'Walk the dog', 'Finish project', 'Call mom'];
-  
-  return (
-    <View>
-      <Text style={{fontSize: 20, fontWeight: 'bold'}}>My Todos:</Text>
+      <Text>User: {user.name}</Text>
+      <Text>Hobbies: {user.hobbies.join(", ")}</Text>
       <FlatList
-        data={todos}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => (
-          <Text>{index + 1}. {item}</Text>
+        data={products}
+        keyExtractor={(item: Product) => item.id.toString()}
+        renderItem={({ item }: { item: Product }) => (
+          <Text>
+            {item.name}: ${item.price}
+          </Text>
         )}
       />
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View, FlatList } from 'react-native';
-
-const TodoList = (): JSX.Element => {
-  const todos: string[] = ['Buy groceries', 'Walk the dog', 'Finish project', 'Call mom'];
-  
-  return (
-    <View>
-      <Text style={{fontSize: 20, fontWeight: 'bold'}}>My Todos:</Text>
-      <FlatList
-        data={todos}
-        keyExtractor={(item: string, index: number) => index.toString()}
-        renderItem={({item, index}: {item: string; index: number}) => (
-          <Text>{index + 1}. {item}</Text>
-        )}
-      />
-    </View>
-  );
-};
-```
-
-#### 3. Function
-
-**JavaScript Example:**
-```javascript
-import { Text, View, Button } from 'react-native';
-
-const Calculator = () => {
-  // Function as a data type
-  const add = function(a, b) {
-    return a + b;
-  };
-  
-  const multiply = (a, b) => a * b;
-  
-  const calculate = (operation, x, y) => {
-    return operation(x, y);
-  };
-  
-  return (
-    <View>
-      <Text>5 + 3 = {calculate(add, 5, 3)}</Text>
-      <Text>5 × 3 = {calculate(multiply, 5, 3)}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-type OperationFunction = (a: number, b: number) => number;
-
-const Calculator = (): JSX.Element => {
-  const add: OperationFunction = function(a, b) {
-    return a + b;
-  };
-  
-  const multiply: OperationFunction = (a, b) => a * b;
-  
-  const calculate = (operation: OperationFunction, x: number, y: number): number => {
-    return operation(x, y);
-  };
-  
-  return (
-    <View>
-      <Text>5 + 3 = {calculate(add, 5, 3)}</Text>
-      <Text>5 × 3 = {calculate(multiply, 5, 3)}</Text>
     </View>
   );
 };
@@ -546,127 +219,39 @@ const Calculator = (): JSX.Element => {
 
 ### Comparison Table
 
-| Feature | var | let | const |
-|---------|-----|-----|-------|
-| **Scope** | Function-scoped | Block-scoped | Block-scoped |
-| **Hoisting** | Hoisted (undefined) | Hoisted (TDZ) | Hoisted (TDZ) |
-| **Re-declaration** | Allowed | Not allowed | Not allowed |
-| **Re-assignment** | Allowed | Allowed | Not allowed |
-| **Use in Modern JS** | Avoided | Common | Preferred |
-
-### var (Avoid in Modern Code)
+| Feature              | var                 | let           | const         |
+| -------------------- | ------------------- | ------------- | ------------- |
+| **Scope**            | Function-scoped     | Block-scoped  | Block-scoped  |
+| **Hoisting**         | Hoisted (undefined) | Hoisted (TDZ) | Hoisted (TDZ) |
+| **Re-declaration**   | Allowed             | Not allowed   | Not allowed   |
+| **Re-assignment**    | Allowed             | Allowed       | Not allowed   |
+| **Use in Modern JS** | Avoided             | Common        | Preferred     |
 
 **JavaScript Example:**
+
 ```javascript
-import { Text, View } from 'react-native';
+import { Text, View, Button } from "react-native";
+import { useState } from "react";
 
-const VarExample = () => {
-  var count = 0;
-  
-  if (true) {
-    var count = 10; // Same variable (function-scoped)
-  }
-  
-  return <Text>Count: {count}</Text>; // Outputs: 10
-};
-```
-
-### let (Mutable Variables)
-
-**JavaScript Example:**
-```javascript
-import { Text, View, Button } from 'react-native';
-import { useState } from 'react';
-
-const Counter = () => {
+const VariablesDemo = () => {
   const [count, setCount] = useState(0);
-  
+
   const increment = () => {
-    let newCount = count; // let allows reassignment
+    let newCount = count;
     newCount = newCount + 1;
     setCount(newCount);
   };
-  
+
+  const API_URL = "https://api.example.com";
+  const user = { name: "John" };
+  user.name = "Jane"; // Allowed - object properties can change
+
   return (
     <View>
       <Text>Count: {count}</Text>
       <Button title="Increment" onPress={increment} />
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View, Button } from 'react-native';
-import { useState } from 'react';
-
-const Counter = (): JSX.Element => {
-  const [count, setCount] = useState<number>(0);
-  
-  const increment = (): void => {
-    let newCount: number = count;
-    newCount = newCount + 1;
-    setCount(newCount);
-  };
-  
-  return (
-    <View>
-      <Text>Count: {count}</Text>
-      <Button title="Increment" onPress={increment} />
-    </View>
-  );
-};
-```
-
-### const (Immutable Binding - Preferred)
-
-**JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
-
-const AppConfig = () => {
-  const API_URL = 'https://api.example.com';
-  const MAX_RETRIES = 3;
-  
-  // This works - object properties can change
-  const user = { name: 'John', age: 30 };
-  user.age = 31; // Allowed
-  
-  // This would throw an error
-  // user = { name: 'Jane', age: 25 }; // Error!
-  
-  return (
-    <View>
       <Text>API: {API_URL}</Text>
-      <Text>Max Retries: {MAX_RETRIES}</Text>
-      <Text>User: {user.name}, Age: {user.age}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-interface User {
-  name: string;
-  age: number;
-}
-
-const AppConfig = (): JSX.Element => {
-  const API_URL: string = 'https://api.example.com';
-  const MAX_RETRIES: number = 3;
-  
-  const user: User = { name: 'John', age: 30 };
-  user.age = 31; // Allowed
-  
-  return (
-    <View>
-      <Text>API: {API_URL}</Text>
-      <Text>Max Retries: {MAX_RETRIES}</Text>
-      <Text>User: {user.name}, Age: {user.age}</Text>
+      <Text>User: {user.name}</Text>
     </View>
   );
 };
@@ -677,167 +262,69 @@ const AppConfig = (): JSX.Element => {
 ## Operators
 
 **JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
 
-const OperatorsDemo = () => {
-  // Arithmetic Operators
-  const sum = 10 + 5;         // 15
-  const difference = 10 - 5;   // 5
-  const product = 10 * 5;      // 50
-  const quotient = 10 / 5;     // 2
-  const remainder = 10 % 3;    // 1
-  const power = 2 ** 3;        // 8
-  
-  // Comparison Operators
-  const isEqual = 5 === 5;           // true (strict equality)
-  const isLooseEqual = 5 == '5';     // true (loose equality)
-  const isNotEqual = 5 !== 3;        // true
-  const isGreater = 10 > 5;          // true
-  const isLessOrEqual = 5 <= 5;      // true
-  
-  // Logical Operators
-  const andResult = true && false;   // false
-  const orResult = true || false;    // true
-  const notResult = !true;           // false
-  
-  // Ternary Operator
-  const age = 20;
-  const status = age >= 18 ? 'Adult' : 'Minor';
-  
-  return (
-    <View>
-      <Text>Sum: {sum}</Text>
-      <Text>Is Equal: {isEqual.toString()}</Text>
-      <Text>Status: {status}</Text>
-    </View>
-  );
-};
+```javascript
+const a = 10,
+  b = 5;
+
+// Arithmetic
+const sum = a + b; // 15
+const product = a * b; // 50
+const remainder = a % 3; // 1
+
+// Comparison
+const isEqual = a === b; // false
+const isGreater = a > b; // true
+
+// Logical
+const and = true && false; // false
+const or = true || false; // true
+
+// Ternary
+const status = a > b ? "Greater" : "Smaller"; // 'Greater'
 ```
 
 ---
 
 ## Conditional Statements
 
-### if-else
-
 **JavaScript Example:**
+
 ```javascript
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
 
 const WeatherApp = () => {
-  const temperature = 25;
-  
+  const temp = 25;
+
   let message;
-  if (temperature > 30) {
-    message = "It's hot! 🔥";
-  } else if (temperature > 20) {
-    message = "It's pleasant! ☀️";
+  if (temp > 30) {
+    message = "It's hot!";
+  } else if (temp > 20) {
+    message = "It's pleasant!";
   } else {
-    message = "It's cold! ❄️";
+    message = "It's cold!";
   }
-  
-  return (
-    <View>
-      <Text>Temperature: {temperature}°C</Text>
-      <Text>{message}</Text>
-    </View>
-  );
-};
-```
 
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-const WeatherApp = (): JSX.Element => {
-  const temperature: number = 25;
-  
-  let message: string;
-  if (temperature > 30) {
-    message = "It's hot! 🔥";
-  } else if (temperature > 20) {
-    message = "It's pleasant! ☀️";
-  } else {
-    message = "It's cold! ❄️";
-  }
-  
-  return (
-    <View>
-      <Text>Temperature: {temperature}°C</Text>
-      <Text>{message}</Text>
-    </View>
-  );
-};
-```
-
-### switch-case
-
-**JavaScript Example:**
-```javascript
-import { Text, View } from 'react-native';
-
-const DaySchedule = () => {
-  const day = 'Monday';
-  
+  const day = "Monday";
   let schedule;
-  switch(day) {
-    case 'Monday':
-    case 'Wednesday':
-    case 'Friday':
-      schedule = 'Gym Day 💪';
+  switch (day) {
+    case "Monday":
+    case "Wednesday":
+      schedule = "Gym Day";
       break;
-    case 'Tuesday':
-    case 'Thursday':
-      schedule = 'Coding Day 💻';
-      break;
-    case 'Saturday':
-    case 'Sunday':
-      schedule = 'Rest Day 😴';
+    case "Saturday":
+      schedule = "Rest Day";
       break;
     default:
-      schedule = 'Unknown Day';
+      schedule = "Work Day";
   }
-  
+
   return (
     <View>
-      <Text>{day}: {schedule}</Text>
-    </View>
-  );
-};
-```
-
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
-
-type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
-
-const DaySchedule = (): JSX.Element => {
-  const day: DayOfWeek = 'Monday';
-  
-  let schedule: string;
-  switch(day) {
-    case 'Monday':
-    case 'Wednesday':
-    case 'Friday':
-      schedule = 'Gym Day 💪';
-      break;
-    case 'Tuesday':
-    case 'Thursday':
-      schedule = 'Coding Day 💻';
-      break;
-    case 'Saturday':
-    case 'Sunday':
-      schedule = 'Rest Day 😴';
-      break;
-    default:
-      schedule = 'Unknown Day';
-  }
-  
-  return (
-    <View>
-      <Text>{day}: {schedule}</Text>
+      <Text>{message}</Text>
+      <Text>
+        {day}: {schedule}
+      </Text>
     </View>
   );
 };
@@ -849,596 +336,665 @@ const DaySchedule = (): JSX.Element => {
 
 ### Traditional Functions
 
-**JavaScript Example:**
-```javascript
-import { Text, View, Button } from 'react-native';
+**JavaScript:**
 
-const MathOperations = () => {
-  // Function Declaration
-  function add(a, b) {
-    return a + b;
-  }
-  
-  // Function Expression
-  const subtract = function(a, b) {
-    return a - b;
-  };
-  
-  // Function with default parameters
-  function greet(name = 'Guest') {
-    return `Hello, ${name}!`;
-  }
-  
-  // Function with rest parameters
-  function sum(...numbers) {
-    return numbers.reduce((total, num) => total + num, 0);
-  }
-  
-  return (
-    <View>
-      <Text>5 + 3 = {add(5, 3)}</Text>
-      <Text>5 - 3 = {subtract(5, 3)}</Text>
-      <Text>{greet()}</Text>
-      <Text>{greet('John')}</Text>
-      <Text>Sum of 1,2,3,4,5 = {sum(1, 2, 3, 4, 5)}</Text>
-    </View>
-  );
-};
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+function greet(name = "Guest") {
+  return `Hello, ${name}!`;
+}
+
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
+**TypeScript:**
 
-const MathOperations = (): JSX.Element => {
-  // Function Declaration
-  function add(a: number, b: number): number {
-    return a + b;
-  }
-  
-  // Function Expression
-  const subtract = function(a: number, b: number): number {
-    return a - b;
-  };
-  
-  // Function with default parameters
-  function greet(name: string = 'Guest'): string {
-    return `Hello, ${name}!`;
-  }
-  
-  // Function with rest parameters
-  function sum(...numbers: number[]): number {
-    return numbers.reduce((total, num) => total + num, 0);
-  }
-  
-  return (
-    <View>
-      <Text>5 + 3 = {add(5, 3)}</Text>
-      <Text>5 - 3 = {subtract(5, 3)}</Text>
-      <Text>{greet()}</Text>
-      <Text>{greet('John')}</Text>
-      <Text>Sum of 1,2,3,4,5 = {sum(1, 2, 3, 4, 5)}</Text>
-    </View>
-  );
-};
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+function greet(name: string = "Guest"): string {
+  return `Hello, ${name}!`;
+}
+
+function sum(...numbers: number[]): number {
+  return numbers.reduce((total, num) => total + num, 0);
+}
 ```
 
 ### Arrow Functions
 
-**JavaScript Example:**
-```javascript
-import { Text, View, FlatList } from 'react-native';
+**JavaScript:**
 
-const ArrowFunctionExamples = () => {
-  // Simple arrow function
-  const square = (x) => x * x;
-  
-  // Arrow function with multiple parameters
-  const multiply = (a, b) => a * b;
-  
-  // Arrow function with block body
-  const calculateDiscount = (price, discount) => {
-    const discountAmount = price * (discount / 100);
-    return price - discountAmount;
-  };
-  
-  // Arrow function with no parameters
-  const getRandomNumber = () => Math.floor(Math.random() * 100);
-  
-  // Arrow functions in array methods
-  const numbers = [1, 2, 3, 4, 5];
-  const doubled = numbers.map(n => n * 2);
-  const evens = numbers.filter(n => n % 2 === 0);
-  
-  return (
-    <View>
-      <Text>Square of 5: {square(5)}</Text>
-      <Text>3 × 4 = {multiply(3, 4)}</Text>
-      <Text>$100 with 20% off: ${calculateDiscount(100, 20)}</Text>
-      <Text>Random: {getRandomNumber()}</Text>
-      <Text>Doubled: {doubled.join(', ')}</Text>
-      <Text>Evens: {evens.join(', ')}</Text>
-    </View>
-  );
-};
+```javascript
+const square = (x) => x * x;
+const multiply = (a, b) => a * b;
+const calculate = (op, x, y) => op(x, y);
+
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((n) => n * 2);
+const evens = numbers.filter((n) => n % 2 === 0);
 ```
 
-**TypeScript Example:**
+**TypeScript:**
+
 ```typescript
-import { Text, View } from 'react-native';
+const square = (x: number): number => x * x;
+const multiply = (a: number, b: number): number => a * b;
 
-const ArrowFunctionExamples = (): JSX.Element => {
-  const square = (x: number): number => x * x;
-  
-  const multiply = (a: number, b: number): number => a * b;
-  
-  const calculateDiscount = (price: number, discount: number): number => {
-    const discountAmount: number = price * (discount / 100);
-    return price - discountAmount;
-  };
-  
-  const getRandomNumber = (): number => Math.floor(Math.random() * 100);
-  
-  const numbers: number[] = [1, 2, 3, 4, 5];
-  const doubled: number[] = numbers.map((n: number) => n * 2);
-  const evens: number[] = numbers.filter((n: number) => n % 2 === 0);
-  
-  return (
-    <View>
-      <Text>Square of 5: {square(5)}</Text>
-      <Text>3 × 4 = {multiply(3, 4)}</Text>
-      <Text>$100 with 20% off: ${calculateDiscount(100, 20)}</Text>
-      <Text>Random: {getRandomNumber()}</Text>
-      <Text>Doubled: {doubled.join(', ')}</Text>
-      <Text>Evens: {evens.join(', ')}</Text>
-    </View>
-  );
-};
+type Operation = (a: number, b: number) => number;
+const calculate = (op: Operation, x: number, y: number): number => op(x, y);
+
+const numbers: number[] = [1, 2, 3, 4, 5];
+const doubled: number[] = numbers.map((n: number) => n * 2);
+const evens: number[] = numbers.filter((n: number) => n % 2 === 0);
 ```
 
-### Function vs Arrow Function Differences
+### Function vs Arrow Function
 
-| Feature | Traditional Function | Arrow Function |
-|---------|---------------------|----------------|
-| **Syntax** | `function name() {}` | `const name = () => {}` |
-| **`this` binding** | Has its own `this` | Inherits `this` from parent |
-| **`arguments` object** | Has `arguments` object | No `arguments` object |
-| **Constructor** | Can be used as constructor | Cannot be used as constructor |
-| **Hoisting** | Hoisted (declarations) | Not hoisted (expressions) |
-| **Method definition** | Can be used | Not recommended |
-| **Best for** | Methods, constructors | Callbacks, functional code |
+| Feature            | Traditional Function | Arrow Function          |
+| ------------------ | -------------------- | ----------------------- |
+| **Syntax**         | `function name() {}` | `const name = () => {}` |
+| **`this` binding** | Has its own `this`   | Inherits `this`         |
+| **Constructor**    | Can be constructor   | Cannot                  |
+| **Best for**       | Methods              | Callbacks               |
 
-**Real Example Showing `this` Difference:**
+---
+
+## Arrays
+
+**JavaScript:**
 
 ```javascript
-// Traditional function - 'this' changes based on caller
-const person = {
-  name: 'John',
-  greet: function() {
-    console.log(`Hello, ${this.name}`);
-  }
-};
-person.greet(); // Works: "Hello, John"
+const fruits = ["Apple", "Banana", "Orange"];
+const numbers = [1, 2, 3, 4, 5];
+const mixed = [1, "Hello", true, { name: "John" }];
 
-// Arrow function - 'this' is lexically bound
-const personArrow = {
-  name: 'Jane',
-  greet: () => {
-    console.log(`Hello, ${this.name}`); // 'this' refers to outer scope
-  }
-};
-personArrow.greet(); // Doesn't work as expected
+const firstFruit = fruits[0];
+const lastFruit = fruits[fruits.length - 1];
+const moreFruits = [...fruits, "Mango"];
+
+const matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
 ```
 
 ---
 
 ## Array Methods
 
-Array methods are essential for manipulating data in React Native applications.
+**map() - Transform Elements:**
 
-### map() - Transform Array Elements
-
-**JavaScript Example:**
 ```javascript
-import { Text, View, FlatList } from 'react-native';
+import { FlatList, Text } from "react-native";
 
 const ProductList = () => {
   const products = [
-    { id: 1, name: 'Laptop', price: 999 },
-    { id: 2, name: 'Phone', price: 599 },
-    { id: 3, name: 'Tablet', price: 399 }
+    { id: 1, name: "Laptop", price: 999 },
+    { id: 2, name: "Phone", price: 599 },
   ];
-  
-  // Transform prices with tax
-  const productsWithTax = products.map(product => ({
-    ...product,
-    priceWithTax: product.price * 1.1
+
+  const withTax = products.map((p) => ({
+    ...p,
+    priceWithTax: p.price * 1.1,
   }));
-  
+
   return (
     <FlatList
-      data={productsWithTax}
-      keyExtractor={item => item.id.toString()}
-      renderItem={({item}) => (
-        <View>
-          <Text>{item.name}</Text>
-          <Text>Price: ${item.price}</Text>
-          <Text>With Tax: ${item.priceWithTax.toFixed(2)}</Text>
-        </View>
+      data={withTax}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <Text>
+          {item.name}: ${item.priceWithTax.toFixed(2)}
+        </Text>
       )}
     />
   );
 };
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View, FlatList } from 'react-native';
+**filter() - Filter Elements:**
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
-
-interface ProductWithTax extends Product {
-  priceWithTax: number;
-}
-
-const ProductList = (): JSX.Element => {
-  const products: Product[] = [
-    { id: 1, name: 'Laptop', price: 999 },
-    { id: 2, name: 'Phone', price: 599 },
-    { id: 3, name: 'Tablet', price: 399 }
-  ];
-  
-  const productsWithTax: ProductWithTax[] = products.map((product: Product) => ({
-    ...product,
-    priceWithTax: product.price * 1.1
-  }));
-  
-  return (
-    <FlatList
-      data={productsWithTax}
-      keyExtractor={(item: ProductWithTax) => item.id.toString()}
-      renderItem={({item}: {item: ProductWithTax}) => (
-        <View>
-          <Text>{item.name}</Text>
-          <Text>Price: ${item.price}</Text>
-          <Text>With Tax: ${item.priceWithTax.toFixed(2)}</Text>
-        </View>
-      )}
-    />
-  );
-};
-```
-
-### filter() - Filter Array Elements
-
-**JavaScript Example:**
 ```javascript
-import { Text, View, FlatList, TextInput } from 'react-native';
-import { useState } from 'react';
+const users = [
+  { name: "John", age: 28, active: true },
+  { name: "Jane", age: 34, active: false },
+  { name: "Bob", age: 45, active: true },
+];
 
-const SearchableList = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  const users = [
-    { id: 1, name: 'John Doe', age: 28, active: true },
-    { id: 2, name: 'Jane Smith', age: 34, active: false },
-    { id: 3, name: 'Bob Johnson', age: 45, active: true },
-    { id: 4, name: 'Alice Williams', age: 23, active: true }
-  ];
-  
-  // Filter active users
-  const activeUsers = users.filter(user => user.active);
-  
-  // Filter by search query
-  const searchResults = users.filter(user => 
-    user.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
-  // Filter users over 30
-  const over30 = users.filter(user => user.age > 30);
-  
+const activeUsers = users.filter((u) => u.active);
+const over30 = users.filter((u) => u.age > 30);
+```
+
+**reduce() - Reduce to Single Value:**
+
+```javascript
+const cartItems = [
+  { name: "Shirt", price: 29.99, qty: 2 },
+  { name: "Jeans", price: 59.99, qty: 1 },
+];
+
+const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+```
+
+**Other Methods:**
+
+```javascript
+const nums = [1, 2, 3, 4, 5];
+
+nums.find((n) => n > 3); // 4
+nums.findIndex((n) => n > 3); // 3
+nums.some((n) => n % 2 === 0); // true
+nums.every((n) => n > 0); // true
+nums.includes(3); // true
+nums.slice(1, 4); // [2, 3, 4]
+nums.concat([6, 7]); // [1,2,3,4,5,6,7]
+```
+
+---
+
+## Loops
+
+### for Loop
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+  console.log(i);
+}
+```
+
+### for...of (Values)
+
+```javascript
+const fruits = ["Apple", "Banana", "Orange"];
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+```
+
+### for...in (Keys)
+
+```javascript
+const user = { name: "John", age: 30 };
+for (const key in user) {
+  console.log(`${key}: ${user[key]}`);
+}
+```
+
+### while Loop
+
+```javascript
+let count = 5;
+while (count > 0) {
+  console.log(count);
+  count--;
+}
+```
+
+### forEach
+
+```javascript
+const tasks = ["Task 1", "Task 2", "Task 3"];
+tasks.forEach((task, index) => {
+  console.log(`${index + 1}. ${task}`);
+});
+```
+
+---
+
+## Sets
+
+**JavaScript:**
+
+```javascript
+import { Text, View } from "react-native";
+import { useState } from "react";
+
+const TagsDemo = () => {
+  const [tags, setTags] = useState(new Set(["React", "JavaScript"]));
+
+  // Remove duplicates
+  const nums = [1, 2, 2, 3, 4, 4, 5];
+  const unique = [...new Set(nums)];
+
+  const addTag = (tag) => {
+    setTags((prev) => new Set([...prev, tag]));
+  };
+
+  const removeTag = (tag) => {
+    setTags((prev) => {
+      const newTags = new Set(prev);
+      newTags.delete(tag);
+      return newTags;
+    });
+  };
+
   return (
     <View>
-      <TextInput
-        placeholder="Search users..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      <Text>Active Users: {activeUsers.length}</Text>
-      <Text>Over 30: {over30.length}</Text>
-      <FlatList
-        data={searchResults}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <Text>{item.name} - {item.age}</Text>
-        )}
-      />
+      {[...tags].map((tag) => (
+        <Text key={tag}>• {tag}</Text>
+      ))}
+      <Text>Size: {tags.size}</Text>
+      <Text>Unique: {unique.join(", ")}</Text>
     </View>
   );
 };
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View, FlatList, TextInput } from 'react-native';
-import { useState } from 'react';
+**Set Operations:**
 
+```javascript
+const setA = new Set([1, 2, 3, 4]);
+const setB = new Set([3, 4, 5, 6]);
+
+// Union
+const union = new Set([...setA, ...setB]);
+
+// Intersection
+const intersection = new Set([...setA].filter((x) => setB.has(x)));
+
+// Difference
+const difference = new Set([...setA].filter((x) => !setB.has(x)));
+```
+
+---
+
+## Optional Chaining & Nullish Coalescing
+
+### Optional Chaining (?.)
+
+Safely access nested properties without errors.
+
+**JavaScript:**
+
+```javascript
+import { Text, View } from "react-native";
+
+const UserCard = ({ user }) => {
+  return (
+    <View>
+      <Text>Name: {user?.name}</Text>
+      <Text>City: {user?.address?.city}</Text>
+      <Text>Phone: {user?.contacts?.[0]?.phone}</Text>
+      <Text>Email: {user?.getEmail?.()}</Text>
+    </View>
+  );
+};
+```
+
+**TypeScript:**
+
+```typescript
 interface User {
-  id: number;
-  name: string;
-  age: number;
-  active: boolean;
+  name?: string;
+  address?: { city?: string };
+  contacts?: Array<{ phone?: string }>;
+  getEmail?: () => string;
 }
 
-const SearchableList = (): JSX.Element => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  
-  const users: User[] = [
-    { id: 1, name: 'John Doe', age: 28, active: true },
-    { id: 2, name: 'Jane Smith', age: 34, active: false },
-    { id: 3, name: 'Bob Johnson', age: 45, active: true },
-    { id: 4, name: 'Alice Williams', age: 23, active: true }
-  ];
-  
-  const activeUsers: User[] = users.filter((user: User) => user.active);
-  
-  const searchResults: User[] = users.filter((user: User) => 
-    user.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
-  const over30: User[] = users.filter((user: User) => user.age > 30);
-  
+const UserCard: FC<{ user?: User }> = ({ user }) => {
   return (
     <View>
-      <TextInput
-        placeholder="Search users..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      <Text>Active Users: {activeUsers.length}</Text>
-      <Text>Over 30: {over30.length}</Text>
-      <FlatList
-        data={searchResults}
-        keyExtractor={(item: User) => item.id.toString()}
-        renderItem={({item}: {item: User}) => (
-          <Text>{item.name} - {item.age}</Text>
-        )}
-      />
+      <Text>Name: {user?.name}</Text>
+      <Text>City: {user?.address?.city}</Text>
+      <Text>Phone: {user?.contacts?.[0]?.phone}</Text>
+      <Text>Email: {user?.getEmail?.()}</Text>
     </View>
   );
 };
 ```
 
-### reduce() - Reduce Array to Single Value
+### Nullish Coalescing (??)
 
-**JavaScript Example:**
+Provide defaults only for null/undefined (not for 0, '', false).
+
+**Comparison:**
+
 ```javascript
-import { Text, View } from 'react-native';
+const score = 0;
+const name = "";
 
-const OrderSummary = () => {
-  const cartItems = [
-    { id: 1, name: 'Shirt', price: 29.99, quantity: 2 },
-    { id: 2, name: 'Jeans', price: 59.99, quantity: 1 },
-    { id: 3, name: 'Shoes', price: 89.99, quantity: 1 }
-  ];
-  
-  // Calculate total price
-  const totalPrice = cartItems.reduce((total, item) => {
-    return total + (item.price * item.quantity);
-  }, 0);
-  
-  // Count total items
-  const totalItems = cartItems.reduce((count, item) => {
-    return count + item.quantity;
-  }, 0);
-  
-  // Group items by price range
-  const priceRanges = cartItems.reduce((acc, item) => {
-    const range = item.price < 50 ? 'budget' : 'premium';
-    acc[range] = (acc[range] || 0) + 1;
-    return acc;
-  }, {});
-  
-  return (
-    <View>
-      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Order Summary</Text>
-      <Text>Total Items: {totalItems}</Text>
-      <Text>Total Price: ${totalPrice.toFixed(2)}</Text>
-      <Text>Budget Items: {priceRanges.budget || 0}</Text>
-      <Text>Premium Items: {priceRanges.premium || 0}</Text>
-    </View>
-  );
-};
+// Using || (wrong for these cases)
+console.log(score || 100); // 100 (wrong!)
+console.log(name || "Guest"); // 'Guest' (wrong!)
+
+// Using ?? (correct)
+console.log(score ?? 100); // 0 (correct!)
+console.log(name ?? "Guest"); // '' (correct!)
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, View } from 'react-native';
+**React Native Example:**
 
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-interface PriceRanges {
-  budget?: number;
-  premium?: number;
-}
-
-const OrderSummary = (): JSX.Element => {
-  const cartItems: CartItem[] = [
-    { id: 1, name: 'Shirt', price: 29.99, quantity: 2 },
-    { id: 2, name: 'Jeans', price: 59.99, quantity: 1 },
-    { id: 3, name: 'Shoes', price: 89.99, quantity: 1 }
-  ];
-  
-  const totalPrice: number = cartItems.reduce((total: number, item: CartItem) => {
-    return total + (item.price * item.quantity);
-  }, 0);
-  
-  const totalItems: number = cartItems.reduce((count: number, item: CartItem) => {
-    return count + item.quantity;
-  }, 0);
-  
-  const priceRanges: PriceRanges = cartItems.reduce((acc: PriceRanges, item: CartItem) => {
-    const range: 'budget' | 'premium' = item.price < 50 ? 'budget' : 'premium';
-    acc[range] = (acc[range] || 0) + 1;
-    return acc;
-  }, {});
-  
-  return (
-    <View>
-      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Order Summary</Text>
-      <Text>Total Items: {totalItems}</Text>
-      <Text>Total Price: ${totalPrice.toFixed(2)}</Text>
-      <Text>Budget Items: {priceRanges.budget || 0}</Text>
-      <Text>Premium Items: {priceRanges.premium || 0}</Text>
-    </View>
-  );
-};
-```
-
-### Other Essential Array Methods
-
-**JavaScript Example:**
 ```javascript
-import { Text, ScrollView } from 'react-native';
-
-const ArrayMethodsDemo = () => {
-  const numbers = [1, 2, 3, 4, 5];
-  const fruits = ['apple', 'banana', 'orange'];
-  
-  // find() - Find first element matching condition
-  const found = numbers.find(n => n > 3); // 4
-  
-  // findIndex() - Find index of first matching element
-  const foundIndex = numbers.findIndex(n => n > 3); // 3
-  
-  // some() - Check if any element matches
-  const hasEven = numbers.some(n => n % 2 === 0); // true
-  
-  // every() - Check if all elements match
-  const allPositive = numbers.every(n => n > 0); // true
-  
-  // includes() - Check if array includes value
-  const hasApple = fruits.includes('apple'); // true
-  
-  // indexOf() - Get index of value
-  const appleIndex = fruits.indexOf('apple'); // 0
-  
-  // slice() - Get portion of array
-  const sliced = numbers.slice(1, 4); // [2, 3, 4]
-  
-  // concat() - Merge arrays
-  const combined = numbers.concat([6, 7, 8]);
-  
-  // join() - Convert to string
-  const joined = fruits.join(', '); // "apple, banana, orange"
-  
-  // reverse() - Reverse array (mutates original)
-  const reversed = [...numbers].reverse(); // [5, 4, 3, 2, 1]
-  
-  // sort() - Sort array (mutates original)
-  const sorted = [...fruits].sort(); // ['apple', 'banana', 'orange']
-  
-  // flat() - Flatten nested arrays
-  const nested = [1, [2, 3], [4, [5, 6]]];
-  const flattened = nested.flat(2); // [1, 2, 3, 4, 5, 6]
-  
+const GameScore = ({ player }) => {
   return (
-    <ScrollView>
-      <Text>find(): {found}</Text>
-      <Text>findIndex(): {foundIndex}</Text>
-      <Text>some(): {hasEven.toString()}</Text>
-      <Text>every(): {allPositive.toString()}</Text>
-      <Text>includes(): {hasApple.toString()}</Text>
-      <Text>indexOf(): {appleIndex}</Text>
-      <Text>slice(): {sliced.join(', ')}</Text>
-      <Text>concat(): {combined.join(', ')}</Text>
-      <Text>join(): {joined}</Text>
-      <Text>reverse(): {reversed.join(', ')}</Text>
-      <Text>sort(): {sorted.join(', ')}</Text>
-      <Text>flat(): {flattened.join(', ')}</Text>
-    </ScrollView>
+    <View>
+      <Text>Score: {player.score ?? "No score"}</Text>
+      <Text>Level: {player.level ?? 1}</Text>
+      <Text>Lives: {player.lives ?? 3}</Text>
+    </View>
+  );
+};
+```
+
+### Combined Usage
+
+```javascript
+const UserProfile = ({ user }) => {
+  return (
+    <View>
+      <Text>City: {user?.address?.city ?? "Unknown"}</Text>
+      <Text>Phone: {user?.contacts?.[0] ?? "No phone"}</Text>
+      <Text>Age: {user?.profile?.age ?? "Not specified"}</Text>
+    </View>
   );
 };
 ```
 
 ---
 
-## Arrays
+## Functional Components in React Native
 
-**JavaScript Example:**
+### Basic Component
+
+**JavaScript:**
+
 ```javascript
-import { Text, View, ScrollView } from 'react-native';
+import { View, Text, StyleSheet } from "react-native";
 
-const ArrayExamples = () => {
-  // Array creation
-  const fruits = ['Apple', 'Banana', 'Orange'];
-  const numbers = [1, 2, 3, 4, 5];
-  const mixed = [1, 'Hello', true, null, {name: 'John'}];
-  
-  // Array access
-  const firstFruit = fruits[0];
-  const lastFruit = fruits[fruits.length - 1];
-  
-  // Array modification
-  const moreFruits = [...fruits, 'Mango', 'Grapes'];
-  
-  // Multidimensional array
-  const matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-  ];
-  
+const Welcome = () => {
   return (
-    <ScrollView>
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>Arrays Demo</Text>
-      <Text>First Fruit: {firstFruit}</Text>
-      <Text>Last Fruit: {lastFruit}</Text>
-      <Text>All Fruits: {moreFruits.join(', ')}</Text>
-      <Text>Matrix [1][1]: {matrix[1][1]}</Text>
-      <Text>Array Length: {fruits.length}</Text>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome!</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  title: { fontSize: 24, fontWeight: "bold" },
+});
+
+export default Welcome;
+```
+
+### Component with Props
+
+**TypeScript:**
+
+```typescript
+import { View, Text } from "react-native";
+import { FC } from "react";
+
+interface UserCardProps {
+  name: string;
+  email: string;
+  age: number;
+}
+
+const UserCard: FC<UserCardProps> = ({ name, email, age }) => {
+  return (
+    <View>
+      <Text>{name}</Text>
+      <Text>{email}</Text>
+      <Text>Age: {age}</Text>
+    </View>
   );
 };
 ```
 
-**TypeScript Example:**
-```typescript
-import { Text, ScrollView } from 'react-native';
+### Component with State
 
-const ArrayExamples = (): JSX.Element => {
-  const fruits: string[] = ['Apple', 'Banana', 'Orange'];
-  const numbers: number[] = [1, 2, 3, 4, 5];
-  const mixed: (number | string | boolean | null | object)[] = [1, 'Hello', true, null, {name: 'John'}];
-  
-  const firstFruit: string = fruits[0];
-  const lastFruit: string = fruits[fruits.length - 1];
-  
-  const moreFruits: string[] = [...fruits, 'Mango', 'Grapes'];
-  
-  const matrix: number[][] = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-  ];
-  
+**JavaScript:**
+
+```javascript
+import { View, Text, Button } from "react-native";
+import { useState } from "react";
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
   return (
-    <ScrollView>
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>Arrays Demo</Text>
-      <Text>First Fruit: {firstFruit}</Text>
-      <Text>Last Fruit: {lastFruit}</Text>
-      <Text>All Fruits: {moreFruits.join(', ')}</Text>
-      <Text>Matrix [1][1]: {matrix[1][1]}</Text>
-      <Text>Array Length: {fruits.length}</Text>
-    </ScrollView>
+    <View>
+      <Text>Count: {count}</Text>
+      <Button title="+" onPress={() => setCount(count + 1)} />
+      <Button title="-" onPress={() => setCount(count - 1)} />
+    </View>
   );
 };
+```
+
+### Component with Effects
+
+**JavaScript:**
+
+```javascript
+import { View, Text, ActivityIndicator } from "react-native";
+import { useState, useEffect } from "react";
+
+const DataFetcher = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://api.example.com/data")
+      .then((res) => res.json())
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      });
+
+    return () => {
+      console.log("Cleanup");
+    };
+  }, []);
+
+  if (loading) return <ActivityIndicator />;
+  return <Text>{JSON.stringify(data)}</Text>;
+};
+```
+
+---
+
+## Why Functions Are Better Than Classes
+
+### Comparison
+
+| Feature         | Classes          | Functions    |
+| --------------- | ---------------- | ------------ |
+| **Syntax**      | Verbose          | Concise      |
+| **State**       | this.state       | useState()   |
+| **Lifecycle**   | Multiple methods | useEffect()  |
+| **`this`**      | Requires binding | No `this`    |
+| **Reusability** | HOCs             | Custom Hooks |
+| **Testing**     | Complex          | Simple       |
+| **Bundle Size** | Larger           | Smaller      |
+
+### Example Comparison
+
+**Class Component:**
+
+```javascript
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+    this.increment = this.increment.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("Mounted");
+  }
+
+  increment() {
+    this.setState({ count: this.state.count + 1 });
+  }
+
+  render() {
+    return (
+      <View>
+        <Text>{this.state.count}</Text>
+        <Button title="+" onPress={this.increment} />
+      </View>
+    );
+  }
+}
+```
+
+**Functional Component:**
+
+```javascript
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Mounted");
+  }, []);
+
+  return (
+    <View>
+      <Text>{count}</Text>
+      <Button title="+" onPress={() => setCount(count + 1)} />
+    </View>
+  );
+};
+```
+
+### Advantages
+
+1. Less boilerplate code
+2. No `this` binding confusion
+3. Easier to read and understand
+4. Better code reusability with hooks
+5. Smaller bundle size
+6. Official React recommendation
+
+---
+
+## JavaScript's Shift to Function-Based Programming
+
+### Why the Shift?
+
+**1. `this` Complexity:**
+
+```javascript
+// Class - confusing 'this'
+class Button {
+  handleClick() {
+    console.log(this); // undefined without binding!
+  }
+}
+
+// Function - no 'this'
+const Button = () => {
+  const handleClick = () => {
+    console.log("Clear!");
+  };
+};
+```
+
+**2. Code Reuse:**
+
+```javascript
+// Old: HOC (complex)
+const withAuth = (Component) => {
+  return class extends React.Component {
+    render() {
+      return this.props.isAuth ? <Component /> : <Login />;
+    }
+  };
+};
+
+// New: Hook (simple)
+const useAuth = () => {
+  const [isAuth, setIsAuth] = useState(false);
+  return isAuth;
+};
+
+const Dashboard = () => {
+  const isAuth = useAuth();
+  return isAuth ? <Content /> : <Login />;
+};
+```
+
+**3. Lifecycle Simplification:**
+
+```javascript
+// Class: scattered logic
+class Profile extends Component {
+  componentDidMount() {
+    this.fetchUser();
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.fetchUser();
+    }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+}
+
+// Function: grouped logic
+const Profile = ({ id }) => {
+  useEffect(() => {
+    fetchUser(id);
+  }, [id]);
+
+  useEffect(() => {
+    subscribe();
+    return () => unsubscribe();
+  }, []);
+};
+```
+
+### Modern Philosophy
+
+Functions enable:
+
+- **Composition over inheritance**
+- **Functional programming principles**
+- **Better tree-shaking**
+- **Concurrent mode support**
+- **Improved developer experience**
+
+### Conclusion
+
+JavaScript shifted to functions because they provide:
+
+- Simpler syntax
+- Better code organization
+- Easier testing
+- More maintainable code
+- Better performance potential
+
+**Functions are now the standard for React and React Native development.**
+
+---
+
+## Summary
+
+**Key Takeaways:**
+
+1. **TypeScript** is better for large projects (type safety)
+2. **Prefer `const`**, use `let` when needed, avoid `var`
+3. **Arrow functions** are simpler and avoid `this` issues
+4. **Master array methods**: map, filter, reduce
+5. **Optional chaining (`?.`)** for safe property access
+6. **Nullish coalescing (`??`)** for smart defaults
+7. **Functional components** are the modern standard
+8. **Hooks** (useState, useEffect) replace class methods
+9. **Functions > Classes** for simplicity and maintainability
+
+**Practice by building real React Native apps!**
